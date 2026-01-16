@@ -271,11 +271,14 @@ sub validate_parameters {
     unless (grep { $_ eq $params->{db_preset} } @valid_dbs) {
         die "Invalid db_preset: $params->{db_preset}. Must be one of: " . join(", ", @valid_dbs);
     }
-    
-    # Validate database directory if not using backend default
-    if ($params->{data_dir} && !application_backend_dir()) {
-        die "Database directory not accessible: $params->{data_dir}" unless -d $params->{data_dir};
-    }
+
+    #
+    # in production, preflight runs don't have the data volumes bound into the container
+    #
+    # # Validate database directory if not using backend default
+    # if ($params->{data_dir} && !application_backend_dir()) {
+    #     die "Database directory not accessible: $params->{data_dir}" unless -d $params->{data_dir};
+    # }
     
     log_message("INFO", "Parameters validated successfully");
 }
