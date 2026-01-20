@@ -1,6 +1,6 @@
 {
   "id": "AlphaFold",
-  "script": "App-AlphaFold.pl",
+  "script": "App-AlphaFold",
   "label": "AlphaFoldV2",
   "description": "AlphaFold predicts a protein's 3D structure from its amino acid sequence using deep learning",
   "default_memory": "64G",
