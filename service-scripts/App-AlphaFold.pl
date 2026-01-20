@@ -119,15 +119,12 @@ sub preflight {
     $memory_gb = 256 if $memory_gb > 256;
     $runtime = 86400 if $runtime > 86400; # 24 hour max
     
-    my $time = int($runtime / 60);
-    $time = 1 if $time == 0;
-    
     print STDERR "Estimated resources: CPU=$cpu, Memory=${memory_gb}G, Runtime=${time}min\n" if $ENV{P3_DEBUG};
     
     return {
         cpu => $cpu,
         memory => "${memory_gb}G",
-        runtime => $time,
+        runtime => $runtime,
         policy_data => { gpu_count => 1, partition => 'gpu2', constraint => 'H100|H200' },
     };
 }
@@ -274,7 +271,7 @@ sub validate_parameters {
 
     #
     # in production, preflight runs don't have the data volumes bound into the container
-    #
+    
     # # Validate database directory if not using backend default
     # if ($params->{data_dir} && !application_backend_dir()) {
     #     die "Database directory not accessible: $params->{data_dir}" unless -d $params->{data_dir};
