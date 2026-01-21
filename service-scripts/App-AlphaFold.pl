@@ -119,7 +119,7 @@ sub preflight {
     $memory_gb = 256 if $memory_gb > 256;
     $runtime = 86400 if $runtime > 86400; # 24 hour max
     
-    print STDERR "Estimated resources: CPU=$cpu, Memory=${memory_gb}G, Runtime=${time}min\n" if $ENV{P3_DEBUG};
+    print STDERR "Estimated resources: CPU=$cpu, Memory=${memory_gb}G, Runtime=${runtime}sec\n" if $ENV{P3_DEBUG};
     
     return {
         cpu => $cpu,
