@@ -27,6 +27,7 @@ use Bio::KBase::AppService::AppConfig qw(application_backend_dir);
 our $VERSION = '1.0.0';
 
 # Logging setup
+$ENV{P3_LOG_LEVEL} //= 'INFO';
 my $log_level = $ENV{P3_LOG_LEVEL} // ($ENV{P3_DEBUG} ? 'DEBUG' : 'INFO');
 
 # Create the application script object
@@ -150,7 +151,7 @@ sub run {
         log_message("DEBUG", "Application backend directory not available");
     }
     
-    log_message("DEBUG", "Parameters: " . Dumper($params)) if $ENV{P3_DEBUG};
+    log_message("DEBUG", "Parameters: " . Dumper($raw_params, $params));
     
     # Validate required parameters
     validate_parameters($params);
@@ -399,7 +400,6 @@ sub execute_tool {
     } elsif ($db_preset eq "reduced_dbs") {
         push @cmd, "--small_bfd_database_path", "$db_path/small_bfd/bfd-first_non_consensus_sequences.fasta";
     }
-    
     # Database paths based on model_preset  
     my $model_preset = $params->{model_preset} // "monomer";
     if ($model_preset eq "multimer") {
